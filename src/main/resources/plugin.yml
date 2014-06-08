@@ -6,3 +6,7 @@ author: ghowden/Eluinhost
 website: wiki.publicuhc.com
 database: false
 depend: [ProtocolLib]
+permissions:
+  Footprint.leavePrints:
+    description: Permission to leave prints
+    default: true
