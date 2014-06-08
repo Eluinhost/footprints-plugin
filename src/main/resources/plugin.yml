@@ -7,6 +7,6 @@ website: wiki.publicuhc.com
 database: false
 depend: [ProtocolLib]
 permissions:
-  Footprint.leavePrints:
+  Footprint.leavePrint:
     description: Permission to leave prints
     default: true
