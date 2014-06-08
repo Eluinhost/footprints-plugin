@@ -1,0 +1,4 @@
+minDistBetween: 2
+maxRenderDist: 50
+tickTime: 10
+ticksToLast: 120
