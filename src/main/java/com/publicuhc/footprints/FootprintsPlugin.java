@@ -17,7 +17,7 @@ public class FootprintsPlugin extends JavaPlugin {
         double minDistBetween = configuration.getDouble("minDistBetween");
         double maxRenderDist = configuration.getDouble("maxRenderDist");
         int tickTime = configuration.getInt("tickTime");
-        int ticksToLast = configuration.getInt("timeToLast");
+        int ticksToLast = configuration.getInt("ticksToLast");
 
         Ticker ticker = new Ticker(
                 ProtocolLibrary.getProtocolManager(),
