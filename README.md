@@ -1,7 +1,15 @@
-footprints-plugin
-=================
+Footprints
+==========
 
 A (experimental) Bukkit plugin that leaves footprints behind players.
+
+## Example
+
+![Example Image](http://puu.sh/9kN82/9a261da8df.jpg)
+
+## Dependency
+
+Requires [ProtocolLib](http://dev.bukkit.org/bukkit-plugins/protocollib/) to be installed to run. Built against ProtocolLib 3.3.1
 
 ## Permissions
 
