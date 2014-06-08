@@ -110,7 +110,7 @@ public class Ticker extends BukkitRunnable {
      * Sends the footstep to nearby players
      * @param footstep the footstep to send
      */
-    private void sendFootstep(Footprint footstep){
+    private void sendFootstep(Footprint footstep) {
         m_defaultPacket.getStrings().write(0, "footstep");
         Location loc = footstep.getLocation();
         m_defaultPacket.getFloat()
@@ -123,7 +123,7 @@ public class Ticker extends BukkitRunnable {
                 .write(6, 1.0F);
         m_defaultPacket.getIntegers().write(0, 1);
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if(p.getLocation().getWorld().equals(loc.getWorld())) {
+            if(!p.getLocation().getWorld().equals(loc.getWorld())) {
                 continue;
             }
             try {
