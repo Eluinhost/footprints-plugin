@@ -96,7 +96,7 @@ public class Ticker extends BukkitRunnable {
             return true;
         }
         for (Footprint footstep : footprints) {
-            if(footstep.getLocation().getWorld().equals(loc.getWorld())) {
+            if(footstep.getLocation().getWorld().getName().equals(loc.getWorld().getName())) {
                 continue;
             }
             if (footstep.getLocation().distanceSquared(loc) < distanceSquared) {
@@ -123,7 +123,7 @@ public class Ticker extends BukkitRunnable {
                 .write(6, 1.0F);
         m_defaultPacket.getIntegers().write(0, 1);
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if(!p.getLocation().getWorld().equals(loc.getWorld())) {
+            if(!p.getLocation().getWorld().getName().equals(loc.getWorld().getName())) {
                 continue;
             }
             try {
