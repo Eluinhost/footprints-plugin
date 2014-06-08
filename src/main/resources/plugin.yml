@@ -1,0 +1,8 @@
+name: Footprints
+main: com.publicuhc.footprints.FootprintsPlugin
+version: 1.0
+description: Players leave 'footprints' behind them
+author: ghowden/Eluinhost
+website: wiki.publicuhc.com
+database: false
+depend: [ProtocolLib]
