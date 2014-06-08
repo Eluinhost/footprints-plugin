@@ -96,7 +96,7 @@ public class Ticker extends BukkitRunnable {
             return true;
         }
         for (Footprint footstep : footprints) {
-            if(footstep.getLocation().getWorld().getName().equals(loc.getWorld().getName())) {
+            if(!footstep.getLocation().getWorld().getName().equals(loc.getWorld().getName())) {
                 continue;
             }
             if (footstep.getLocation().distanceSquared(loc) < distanceSquared) {
