@@ -86,11 +86,11 @@ public class Ticker extends BukkitRunnable {
     /**
      * Checks for footprints within the distance of the location for the player
      * @param loc Location
-     * @param distance int
+     * @param distanceSquared int
      * @param playerID the player ID
      * @return boolean true if clear, false if not
      */
-    private boolean isClearOfFootprints(Location loc, double distance, UUID playerID) {
+    private boolean isClearOfFootprints(Location loc, double distanceSquared, UUID playerID) {
         List<Footprint> footprints = m_footprints.get(playerID);
         if(null == footprints) {
             return true;
@@ -99,7 +99,7 @@ public class Ticker extends BukkitRunnable {
             if(footstep.getLocation().getWorld().equals(loc.getWorld())) {
                 continue;
             }
-            if (footstep.getLocation().distanceSquared(loc) < distance) {
+            if (footstep.getLocation().distanceSquared(loc) < distanceSquared) {
                 return false;
             }
         }
