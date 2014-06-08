@@ -13,10 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Ticker extends BukkitRunnable {
 
@@ -25,7 +22,7 @@ public class Ticker extends BukkitRunnable {
 
     private final PacketContainer m_defaultPacket;
 
-    private final List<Footprint> m_footprints = new ArrayList<Footprint>();
+    private final HashMap<UUID, List<Footprint>> m_footprints = new HashMap<UUID, List<Footprint>>();
     private final ProtocolManager m_protocol;
 
     private final double m_minDistBetweenSquared;
@@ -60,21 +57,28 @@ public class Ticker extends BukkitRunnable {
             if (block.getType() != Material.AIR && block.getType() != Material.WATER && isClearOfFootprints(playerLocation, m_minDistBetweenSquared, p.getUniqueId())) {
                 playerLocation.setY(block.getLocation().getY() + (block.getType() == Material.SNOW ? SNOW_OFFSET : REGULAR_OFFSET));
 
-                Footprint newFootstep = new Footprint(playerLocation, m_ticksToLast, p.getUniqueId());
-                m_footprints.add(newFootstep);
+                Footprint newFootstep = new Footprint(playerLocation, m_ticksToLast);
+                List<Footprint> playerPrints = m_footprints.get(p.getUniqueId());
+                if( null == playerPrints ) {
+                    playerPrints = new ArrayList<Footprint>();
+                    m_footprints.put(p.getUniqueId(), playerPrints);
+                }
+                playerPrints.add(newFootstep);
                 sendFootstep(newFootstep);
             }
         }
 
-        //send all the footprints and cleanup as needed
-        Iterator<Footprint> iterator = m_footprints.iterator();
-        while (iterator.hasNext()) {
-            Footprint footstep = iterator.next();
-            footstep.decrementTimeRemaining();
-            if (footstep.getTimeRemaining() <= 0) {
-                iterator.remove();
-            } else {
-                sendFootstep(footstep);
+        for(Map.Entry<UUID, List<Footprint>> entry : m_footprints.entrySet()) {
+            //send all the footprints and cleanup as needed
+            Iterator<Footprint> iterator = entry.getValue().iterator();
+            while (iterator.hasNext()) {
+                Footprint footstep = iterator.next();
+                footstep.decrementTimeRemaining();
+                if (footstep.getTimeRemaining() <= 0) {
+                    iterator.remove();
+                } else {
+                    sendFootstep(footstep);
+                }
             }
         }
     }
@@ -87,14 +91,16 @@ public class Ticker extends BukkitRunnable {
      * @return boolean true if clear, false if not
      */
     private boolean isClearOfFootprints(Location loc, double distance, UUID playerID) {
-        for (Footprint footstep : m_footprints) {
-            if (footstep.getPlayerID().equals(playerID)) {
-                if(footstep.getLocation().getWorld().equals(loc.getWorld())) {
-                    continue;
-                }
-                if (footstep.getLocation().distanceSquared(loc) < distance) {
-                    return false;
-                }
+        List<Footprint> footprints = m_footprints.get(playerID);
+        if(null == footprints) {
+            return true;
+        }
+        for (Footprint footstep : footprints) {
+            if(footstep.getLocation().getWorld().equals(loc.getWorld())) {
+                continue;
+            }
+            if (footstep.getLocation().distanceSquared(loc) < distance) {
+                return false;
             }
         }
         return true;

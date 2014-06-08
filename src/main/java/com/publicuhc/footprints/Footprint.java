@@ -2,22 +2,17 @@ package com.publicuhc.footprints;
 
 import org.bukkit.Location;
 
-import java.util.UUID;
-
 public class Footprint {
 
     private final Location m_location;
     private int m_timeRemaining;
-    private final UUID m_playerID;
 
     /**
      * Make a new footprint
      * @param loc the location to display it
      * @param timeToLast the amount of 'footstep ticks' to last
-     * @param playerID the player that left the footprint
      */
-    public Footprint(Location loc, int timeToLast, UUID playerID) {
-        m_playerID = playerID;
+    public Footprint(Location loc, int timeToLast) {
         m_location = loc;
         m_timeRemaining = timeToLast;
     }
@@ -41,12 +36,5 @@ public class Footprint {
      */
     public Location getLocation() {
         return m_location;
-    }
-
-    /**
-     * @return the name of the player who left the footprint
-     */
-    public UUID getPlayerID() {
-        return m_playerID;
     }
 }
